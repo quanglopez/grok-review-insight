@@ -120,7 +120,7 @@ function ReviewsPage() {
         <div className="flex items-center justify-between">
           <h2 className="font-semibold">Review đã lưu ({reviews?.length ?? 0})</h2>
           {reviews && reviews.length >= 5 && (
-            <Link to={`/businesses/${id}/analysis`}>
+            <Link to={`/businesses/${id}/report`}>
               <Button><Sparkles className="h-4 w-4 mr-2" />Phân tích bằng MiMo</Button>
             </Link>
           )}
