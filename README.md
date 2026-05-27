@@ -37,20 +37,55 @@ Mẫu đầy đủ: [.env.example](./.env.example).
 
 ## Supabase (database + Auth)
 
-1. Tạo project Supabase hoặc dùng project có sẵn.
-2. Áp migration trong repo:
+### Chuẩn bị
 
-   ```bash
-   # Cách 1: Supabase CLI (khuyến nghị nếu đã link project)
-   supabase link --project-ref YOUR_PROJECT_REF
-   supabase db push
+1. Tạo project trên [Supabase](https://supabase.com) (hoặc dùng project hiện có).
+2. Lấy **project ref** từ URL dashboard (`https://supabase.com/dashboard/project/<project-ref>`) hoặc từ `VITE_SUPABASE_URL` (`https://<project-ref>.supabase.co`).
+3. Điền `.env` (xem [.env.example](./.env.example)).
+4. Cập nhật `supabase/config.toml` → `project_id` **cùng ref** với `.env`. Nếu lệch, `supabase link` / `db push` sẽ áp schema sai project → CRUD lỗi.
 
-   # Cách 2: SQL Editor trên Dashboard — dán nội dung file:
-   # supabase/migrations/20260527042223_*.sql
-   ```
+### Áp migration (runbook)
 
-3. Bật Email auth (hoặc provider bạn dùng) trong Authentication → Providers.
-4. Đảm bảo `supabase/config.toml` → `project_id` **khớp** project ref trong `.env` (nếu lệch, CLI có thể trỏ sai project).
+Migration trong repo:
+
+`supabase/migrations/20260527042223_fbca9af3-e068-4e1d-88dc-1cea64a7923f.sql`
+
+**Cách 1 — Supabase CLI (khuyến nghị)**
+
+```bash
+# Cài CLI: https://supabase.com/docs/guides/cli
+supabase login
+supabase link --project-ref YOUR_PROJECT_REF   # trùng supabase/config.toml và .env
+supabase db push
+```
+
+**Cách 2 — SQL Editor (Dashboard)**
+
+1. Mở project → **SQL** → New query.
+2. Dán toàn bộ nội dung file migration ở trên → **Run**.
+
+### Kiểm tra schema
+
+Trong **Table Editor** hoặc SQL, xác nhận 4 bảng tồn tại và **RLS enabled**:
+
+| Bảng | Mục đích |
+|------|----------|
+| `businesses` | Doanh nghiệp (theo `user_id`) |
+| `reviews` | Review Google Maps |
+| `analysis_reports` | Kết quả MiMo |
+| `recommendations` | 20 đề xuất / báo cáo |
+
+### Auth
+
+Bật **Email** (hoặc provider bạn dùng) trong **Authentication → Providers**.
+
+### Smoke test (sau migration)
+
+1. `bun run dev` → đăng ký / đăng nhập.
+2. Dashboard → **Thêm doanh nghiệp** → thành công (insert `businesses`).
+3. Mở doanh nghiệp → nhập ≥1 review (CSV hoặc thủ công) → **Lưu** (insert `reviews`).
+
+Nếu bước 2–3 báo lỗi RLS / relation does not exist → migration chưa áp đúng project hoặc `project_id` trong `config.toml` không khớp `.env`.
 
 ## Chạy local
 

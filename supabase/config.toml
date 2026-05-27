@@ -1,1 +1,2 @@
-project_id = "pigvzzmvkwpjbttzjdbq"
+# Must match the project ref in VITE_SUPABASE_URL (…supabase.co) and `supabase link --project-ref`
+project_id = "amofvikdcxwtmcidrfgd"
