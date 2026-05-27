@@ -18,6 +18,7 @@ import { Route as AuthenticatedBusinessesIdReviewsRouteImport } from './routes/_
 import { Route as AuthenticatedBusinessesIdReportRouteImport } from './routes/_authenticated/businesses.$id.report'
 import { Route as AuthenticatedBusinessesIdRepliesRouteImport } from './routes/_authenticated/businesses.$id.replies'
 import { Route as AuthenticatedBusinessesIdRecommendationsRouteImport } from './routes/_authenticated/businesses.$id.recommendations'
+import { Route as AuthenticatedBusinessesIdExportRouteImport } from './routes/_authenticated/businesses.$id.export'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -67,12 +68,19 @@ const AuthenticatedBusinessesIdRecommendationsRoute =
     path: '/businesses/$id/recommendations',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedBusinessesIdExportRoute =
+  AuthenticatedBusinessesIdExportRouteImport.update({
+    id: '/businesses/$id/export',
+    path: '/businesses/$id/export',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/businesses/$id/export': typeof AuthenticatedBusinessesIdExportRoute
   '/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/businesses/$id/replies': typeof AuthenticatedBusinessesIdRepliesRoute
   '/businesses/$id/report': typeof AuthenticatedBusinessesIdReportRoute
@@ -83,6 +91,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/businesses/$id/export': typeof AuthenticatedBusinessesIdExportRoute
   '/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/businesses/$id/replies': typeof AuthenticatedBusinessesIdRepliesRoute
   '/businesses/$id/report': typeof AuthenticatedBusinessesIdReportRoute
@@ -95,6 +104,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/businesses/$id/export': typeof AuthenticatedBusinessesIdExportRoute
   '/_authenticated/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/_authenticated/businesses/$id/replies': typeof AuthenticatedBusinessesIdRepliesRoute
   '/_authenticated/businesses/$id/report': typeof AuthenticatedBusinessesIdReportRoute
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/businesses/$id/export'
     | '/businesses/$id/recommendations'
     | '/businesses/$id/replies'
     | '/businesses/$id/report'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/businesses/$id/export'
     | '/businesses/$id/recommendations'
     | '/businesses/$id/replies'
     | '/businesses/$id/report'
@@ -128,6 +140,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/_authenticated/dashboard'
+    | '/_authenticated/businesses/$id/export'
     | '/_authenticated/businesses/$id/recommendations'
     | '/_authenticated/businesses/$id/replies'
     | '/_authenticated/businesses/$id/report'
@@ -206,11 +219,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBusinessesIdRecommendationsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/businesses/$id/export': {
+      id: '/_authenticated/businesses/$id/export'
+      path: '/businesses/$id/export'
+      fullPath: '/businesses/$id/export'
+      preLoaderRoute: typeof AuthenticatedBusinessesIdExportRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedBusinessesIdExportRoute: typeof AuthenticatedBusinessesIdExportRoute
   AuthenticatedBusinessesIdRecommendationsRoute: typeof AuthenticatedBusinessesIdRecommendationsRoute
   AuthenticatedBusinessesIdRepliesRoute: typeof AuthenticatedBusinessesIdRepliesRoute
   AuthenticatedBusinessesIdReportRoute: typeof AuthenticatedBusinessesIdReportRoute
@@ -219,6 +240,7 @@ interface AuthenticatedRouteChildren {
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedBusinessesIdExportRoute: AuthenticatedBusinessesIdExportRoute,
   AuthenticatedBusinessesIdRecommendationsRoute:
     AuthenticatedBusinessesIdRecommendationsRoute,
   AuthenticatedBusinessesIdRepliesRoute: AuthenticatedBusinessesIdRepliesRoute,
