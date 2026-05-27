@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedSettingsApiRouteImport } from './routes/_authenticated/settings.api'
 import { Route as AuthenticatedBusinessesIdReviewsRouteImport } from './routes/_authenticated/businesses.$id.reviews'
 import { Route as AuthenticatedBusinessesIdReportRouteImport } from './routes/_authenticated/businesses.$id.report'
 import { Route as AuthenticatedBusinessesIdRepliesRouteImport } from './routes/_authenticated/businesses.$id.replies'
@@ -44,6 +45,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedSettingsApiRoute =
+  AuthenticatedSettingsApiRouteImport.update({
+    id: '/settings/api',
+    path: '/settings/api',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedBusinessesIdReviewsRoute =
   AuthenticatedBusinessesIdReviewsRouteImport.update({
     id: '/businesses/$id/reviews',
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/settings/api': typeof AuthenticatedSettingsApiRoute
   '/businesses/$id/export': typeof AuthenticatedBusinessesIdExportRoute
   '/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/businesses/$id/replies': typeof AuthenticatedBusinessesIdRepliesRoute
@@ -91,6 +99,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/settings/api': typeof AuthenticatedSettingsApiRoute
   '/businesses/$id/export': typeof AuthenticatedBusinessesIdExportRoute
   '/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/businesses/$id/replies': typeof AuthenticatedBusinessesIdRepliesRoute
@@ -104,6 +113,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/settings/api': typeof AuthenticatedSettingsApiRoute
   '/_authenticated/businesses/$id/export': typeof AuthenticatedBusinessesIdExportRoute
   '/_authenticated/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/_authenticated/businesses/$id/replies': typeof AuthenticatedBusinessesIdRepliesRoute
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/settings/api'
     | '/businesses/$id/export'
     | '/businesses/$id/recommendations'
     | '/businesses/$id/replies'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/settings/api'
     | '/businesses/$id/export'
     | '/businesses/$id/recommendations'
     | '/businesses/$id/replies'
@@ -140,6 +152,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/_authenticated/dashboard'
+    | '/_authenticated/settings/api'
     | '/_authenticated/businesses/$id/export'
     | '/_authenticated/businesses/$id/recommendations'
     | '/_authenticated/businesses/$id/replies'
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/settings/api': {
+      id: '/_authenticated/settings/api'
+      path: '/settings/api'
+      fullPath: '/settings/api'
+      preLoaderRoute: typeof AuthenticatedSettingsApiRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/businesses/$id/reviews': {
       id: '/_authenticated/businesses/$id/reviews'
       path: '/businesses/$id/reviews'
@@ -231,6 +251,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedSettingsApiRoute: typeof AuthenticatedSettingsApiRoute
   AuthenticatedBusinessesIdExportRoute: typeof AuthenticatedBusinessesIdExportRoute
   AuthenticatedBusinessesIdRecommendationsRoute: typeof AuthenticatedBusinessesIdRecommendationsRoute
   AuthenticatedBusinessesIdRepliesRoute: typeof AuthenticatedBusinessesIdRepliesRoute
@@ -240,6 +261,7 @@ interface AuthenticatedRouteChildren {
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedSettingsApiRoute: AuthenticatedSettingsApiRoute,
   AuthenticatedBusinessesIdExportRoute: AuthenticatedBusinessesIdExportRoute,
   AuthenticatedBusinessesIdRecommendationsRoute:
     AuthenticatedBusinessesIdRecommendationsRoute,
