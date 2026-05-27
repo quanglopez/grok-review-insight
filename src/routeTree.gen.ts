@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBusinessesIdReviewsRouteImport } from './routes/_authenticated/businesses.$id.reviews'
 import { Route as AuthenticatedBusinessesIdReportRouteImport } from './routes/_authenticated/businesses.$id.report'
+import { Route as AuthenticatedBusinessesIdRecommendationsRouteImport } from './routes/_authenticated/businesses.$id.recommendations'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -53,12 +54,19 @@ const AuthenticatedBusinessesIdReportRoute =
     path: '/businesses/$id/report',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedBusinessesIdRecommendationsRoute =
+  AuthenticatedBusinessesIdRecommendationsRouteImport.update({
+    id: '/businesses/$id/recommendations',
+    path: '/businesses/$id/recommendations',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/businesses/$id/report': typeof AuthenticatedBusinessesIdReportRoute
   '/businesses/$id/reviews': typeof AuthenticatedBusinessesIdReviewsRoute
 }
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/businesses/$id/report': typeof AuthenticatedBusinessesIdReportRoute
   '/businesses/$id/reviews': typeof AuthenticatedBusinessesIdReviewsRoute
 }
@@ -77,6 +86,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/businesses/$id/recommendations': typeof AuthenticatedBusinessesIdRecommendationsRoute
   '/_authenticated/businesses/$id/report': typeof AuthenticatedBusinessesIdReportRoute
   '/_authenticated/businesses/$id/reviews': typeof AuthenticatedBusinessesIdReviewsRoute
 }
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/businesses/$id/recommendations'
     | '/businesses/$id/report'
     | '/businesses/$id/reviews'
   fileRoutesByTo: FileRoutesByTo
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/dashboard'
+    | '/businesses/$id/recommendations'
     | '/businesses/$id/report'
     | '/businesses/$id/reviews'
   id:
@@ -104,6 +116,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/_authenticated/dashboard'
+    | '/_authenticated/businesses/$id/recommendations'
     | '/_authenticated/businesses/$id/report'
     | '/_authenticated/businesses/$id/reviews'
   fileRoutesById: FileRoutesById
@@ -166,17 +179,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBusinessesIdReportRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/businesses/$id/recommendations': {
+      id: '/_authenticated/businesses/$id/recommendations'
+      path: '/businesses/$id/recommendations'
+      fullPath: '/businesses/$id/recommendations'
+      preLoaderRoute: typeof AuthenticatedBusinessesIdRecommendationsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedBusinessesIdRecommendationsRoute: typeof AuthenticatedBusinessesIdRecommendationsRoute
   AuthenticatedBusinessesIdReportRoute: typeof AuthenticatedBusinessesIdReportRoute
   AuthenticatedBusinessesIdReviewsRoute: typeof AuthenticatedBusinessesIdReviewsRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedBusinessesIdRecommendationsRoute:
+    AuthenticatedBusinessesIdRecommendationsRoute,
   AuthenticatedBusinessesIdReportRoute: AuthenticatedBusinessesIdReportRoute,
   AuthenticatedBusinessesIdReviewsRoute: AuthenticatedBusinessesIdReviewsRoute,
 }
