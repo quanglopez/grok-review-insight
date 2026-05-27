@@ -14,7 +14,186 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analysis_reports: {
+        Row: {
+          average_rating: number | null
+          business_id: string
+          created_at: string
+          id: string
+          keywords: Json | null
+          pain_points: Json | null
+          raw_result_json: Json | null
+          reply_templates: Json | null
+          sentiment: string | null
+          top_complaints: Json | null
+          top_strengths: Json | null
+          topics: Json | null
+        }
+        Insert: {
+          average_rating?: number | null
+          business_id: string
+          created_at?: string
+          id?: string
+          keywords?: Json | null
+          pain_points?: Json | null
+          raw_result_json?: Json | null
+          reply_templates?: Json | null
+          sentiment?: string | null
+          top_complaints?: Json | null
+          top_strengths?: Json | null
+          topics?: Json | null
+        }
+        Update: {
+          average_rating?: number | null
+          business_id?: string
+          created_at?: string
+          id?: string
+          keywords?: Json | null
+          pain_points?: Json | null
+          raw_result_json?: Json | null
+          reply_templates?: Json | null
+          sentiment?: string | null
+          top_complaints?: Json | null
+          top_strengths?: Json | null
+          topics?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analysis_reports_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      businesses: {
+        Row: {
+          category: string | null
+          created_at: string
+          google_maps_url: string | null
+          id: string
+          location: string | null
+          name: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          google_maps_url?: string | null
+          id?: string
+          location?: string | null
+          name: string
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          google_maps_url?: string | null
+          id?: string
+          location?: string | null
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      recommendations: {
+        Row: {
+          action_steps: Json | null
+          created_at: string
+          difficulty: string | null
+          evidence: string | null
+          expected_impact: string | null
+          id: string
+          kpi: string | null
+          priority: string | null
+          problem: string | null
+          rank: number
+          report_id: string
+          timeline: string | null
+          title: string
+        }
+        Insert: {
+          action_steps?: Json | null
+          created_at?: string
+          difficulty?: string | null
+          evidence?: string | null
+          expected_impact?: string | null
+          id?: string
+          kpi?: string | null
+          priority?: string | null
+          problem?: string | null
+          rank: number
+          report_id: string
+          timeline?: string | null
+          title: string
+        }
+        Update: {
+          action_steps?: Json | null
+          created_at?: string
+          difficulty?: string | null
+          evidence?: string | null
+          expected_impact?: string | null
+          id?: string
+          kpi?: string | null
+          priority?: string | null
+          problem?: string | null
+          rank?: number
+          report_id?: string
+          timeline?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recommendations_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "analysis_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          business_id: string
+          created_at: string
+          id: string
+          owner_reply: string | null
+          rating: number
+          review_date: string | null
+          review_text: string | null
+          reviewer_name: string | null
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          id?: string
+          owner_reply?: string | null
+          rating: number
+          review_date?: string | null
+          review_text?: string | null
+          reviewer_name?: string | null
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          id?: string
+          owner_reply?: string | null
+          rating?: number
+          review_date?: string | null
+          review_text?: string | null
+          reviewer_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
